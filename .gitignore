@@ -2,3 +2,5 @@
 [#]*
 
 node_modules
+#Ignore bak files used by Dr Racket
+*.bak
