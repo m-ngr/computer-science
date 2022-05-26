@@ -4,7 +4,7 @@
   "description": "how to code courses in JavaScript",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "keywords": [],
   "author": "mahmoud-elnagar <mahmoud.elnagar1698@gmail.com>",
