@@ -1,2 +1,2 @@
-# cs
-Computer Science Courses
+# Computer Science Courses
+
