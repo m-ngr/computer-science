@@ -1,5 +1,6 @@
 (* Mahmoud Elnagar 28/01/2022 *)
 
+use "hw1.sml";
 
 val test1_1 = is_older ((1,2,3),(2,3,4)) = true
 val test1_2 = is_older ((1,2,3),(1,2,3)) = false

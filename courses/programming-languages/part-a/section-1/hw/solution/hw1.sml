@@ -240,12 +240,12 @@ fun month_range(day1: int, day2: int) =
 
 fun month_range(day1: int, day2: int) = (* tail-recursive version *)
     let
-        fun month_range(day1: int, rsf: int list) =
+        fun month_range(day2: int, rsf: int list) =
             if day1 > day2
             then rsf
-            else month_range(day1 + 1, rsf @ [what_month(day1)] )
+            else month_range(day2 - 1, what_month(day2)::rsf )
     in
-        month_range(day1, [])
+        month_range(day2, [])
     end
 ;*)
 (*======================================= Function 11 ===============================================*)
