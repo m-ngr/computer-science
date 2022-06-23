@@ -105,10 +105,10 @@
   (check-equal? (assoc-1 2) #f "no pair matches - not cached") 
   (check-equal? (assoc-1 2) #f "no pair matches - from cache") ;((2.#f) #f)
   (check-equal? (assoc-1 1) (cons 1 2) "one pair matches - not cached")
-  (check-equal? (assoc-1 1) (cons 1 2) "one pair matches - from cache") ;((2.#f) (1.(1.2)))
+  (check-equal? (assoc-1 1) (cons 1 2) "one pair matches - from cache") ;((2.#f) (1.2))
   (check-equal? (assoc-1 3) (cons 3 4) "two pairs matches: get the first - not cached")
-  (check-equal? (assoc-1 3) (cons 3 4) "two pairs matches: get the first - from cache") ;((3.(3.4)) (1.(1.2)))
-  (check-equal? (assoc-1 1) (cons 1 2) "one pair matches - from cache") ;((3.(3.4)) (1.(1.2)))
+  (check-equal? (assoc-1 3) (cons 3 4) "two pairs matches: get the first - from cache") ;((3.4) (1.2))
+  (check-equal? (assoc-1 1) (cons 1 2) "one pair matches - from cache") ;((3.4) (1.2))
   (check-equal? (assoc-1 2) #f "no pair matches - not cached")
   ))
 

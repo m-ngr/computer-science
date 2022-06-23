@@ -78,9 +78,9 @@
 
 (define (cycle-lists xs ys)
   (letrec ([loop (lambda (n)
-                (cons (cons (list-nth-mod xs n)
-                            (list-nth-mod ys n))
-                      (lambda ()(loop (+ n 1)))))])
+                   (cons (cons (list-nth-mod xs n)
+                               (list-nth-mod ys n))
+                         (lambda ()(loop (+ n 1)))))])
     (lambda ()(loop 0))))
 
 ;======================================= Problem 9 =============================================
@@ -111,9 +111,9 @@
     (lambda (v)
       (let ([cache-ans (vector-assoc v cache)])
         (if cache-ans
-            (cdr cache-ans)
+            (if (cdr cache-ans) cache-ans #f)
             (let ([ans (assoc v xs)])
-              (begin (vector-set! cache index (cons v ans))
+              (begin (vector-set! cache index (if ans ans (cons v ans)))
                      (set! index (remainder (+ index 1) n))
                      ans)))))))
 
