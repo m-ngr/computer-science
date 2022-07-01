@@ -4,7 +4,7 @@
 
 ## [How to Code: Simple Data](https://www.edx.org/course/how-to-code-simple-data)
 
-- [Module (1-A): Beginning Student Language](/module-1-a/)
+- [Module (1-A): Beginning Student Language](./module-1-a/)
 
 - [Module (1-B): How to Design Functions](/module-1-b/)
 
