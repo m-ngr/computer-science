@@ -1,6 +1,12 @@
 # How to Code
 
-## [Design Recipe](https://github.com/AshineFoster/HtDR-book)
+## [Important Files](./files/)
+
+- [Design Recipe](./files/design-recipes.pdf) credits to [AshineFoster](https://github.com/AshineFoster/HtDR-book)
+
+- [Recipe Checklist](./files/recipe-checklist.pdf)
+
+- [My Notes in Racket](./course-notes.rkt)
 
 ## [How to Code: Simple Data](https://www.edx.org/course/how-to-code-simple-data)
 
