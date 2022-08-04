@@ -244,9 +244,11 @@ public:
 		for (auto prev = head, curr = head->next; curr; prev = curr, curr = curr->next) {
 			if (curr->value == value) {
 				remove_next(prev);
-				return *this;
+				break;
 			}
 		}
+
+		return *this;
 	}
 
 	SLList& remove_last(const value_type& value) throw (std::exception) {
