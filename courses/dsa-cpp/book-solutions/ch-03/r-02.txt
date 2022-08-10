@@ -1,0 +1,1 @@
+They will appear in the same relative order; since the algorithm only shifts elements A[j] as long as they are greater than the cur element.
