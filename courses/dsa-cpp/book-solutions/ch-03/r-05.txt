@@ -1,4 +1,0 @@
-# FP definition
-  List is one of:
-   - Empty
-   - Cons(value, List)
