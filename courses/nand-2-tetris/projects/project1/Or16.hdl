@@ -1,0 +1,17 @@
+// Mahmoud Elnagar - 17/08/2022
+
+/**
+ * 16-bit bitwise Or:
+ * for i = 0..15 out[i] = (a[i] or b[i])
+ */
+
+CHIP Or16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+    Not16(in=a, out=nota);
+    Not16(in=b, out=notb);
+    And16(a=nota, b=notb, out=and1);
+    Not16(in=and1, out=out);
+}
