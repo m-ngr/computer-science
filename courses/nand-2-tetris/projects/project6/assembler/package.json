@@ -1,0 +1,17 @@
+{
+  "name": "assembler",
+  "version": "1.0.0",
+  "description": "Converts assembly language to binary code for the hack machine",
+  "main": "assembler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Nand2Tetris",
+    "Assembler",
+    "Hack"
+  ],
+  "author": "mahmoud-elnagar <mahmoud.elnagar1698@gmail.com>",
+  "license": "ISC",
+  "type": "module"
+}
