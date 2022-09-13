@@ -23,7 +23,7 @@ public:
 
 	ArrayQueue(const ArrayQueue& queue) { copy_queue(queue); }
 
-	ArrayQueue(ArrayQueue&& queue) { move_stack(queue); }
+	ArrayQueue(ArrayQueue&& queue) { move_queue(queue); }
 
 	ArrayQueue& operator=(const ArrayQueue& queue) {
 		copy_queue(queue);
