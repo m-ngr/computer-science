@@ -1,0 +1,19 @@
+{
+  "name": "jack-analyzer",
+  "version": "1.0.0",
+  "description": "Analyze Jack Code and Produce AST in XML",
+  "main": "analyzer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Nand2Tetris",
+    "Compiler",
+    "Syntax Analyzer",
+    "Jack",
+    "VM Code"
+  ],
+  "author": "mahmoud-elnagar <mahmoud.elnagar1698@gmail.com>",
+  "license": "ISC",
+  "type": "module"
+}
