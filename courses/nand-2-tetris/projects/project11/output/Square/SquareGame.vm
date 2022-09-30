@@ -1,0 +1,179 @@
+function SquareGame.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+push constant 0
+push constant 30
+call Square.new 3
+pop this 0
+push constant 0
+pop this 1
+push pointer 0
+return
+function SquareGame.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Square.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function SquareGame.moveSquare 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+eq
+if-goto TRUE_BRANCH_0
+goto END_IF_0
+label TRUE_BRANCH_0
+push this 0
+call Square.moveUp 1
+pop temp 0
+label END_IF_0
+push this 1
+push constant 2
+eq
+if-goto TRUE_BRANCH_1
+goto END_IF_1
+label TRUE_BRANCH_1
+push this 0
+call Square.moveDown 1
+pop temp 0
+label END_IF_1
+push this 1
+push constant 3
+eq
+if-goto TRUE_BRANCH_2
+goto END_IF_2
+label TRUE_BRANCH_2
+push this 0
+call Square.moveLeft 1
+pop temp 0
+label END_IF_2
+push this 1
+push constant 4
+eq
+if-goto TRUE_BRANCH_3
+goto END_IF_3
+label TRUE_BRANCH_3
+push this 0
+call Square.moveRight 1
+pop temp 0
+label END_IF_3
+push constant 5
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function SquareGame.run 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label LOOP_0
+push local 1
+not
+not
+if-goto END_LOOP_0
+label LOOP_1
+push local 0
+push constant 0
+eq
+not
+if-goto END_LOOP_1
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call SquareGame.moveSquare 1
+pop temp 0
+goto LOOP_1
+label END_LOOP_1
+push local 0
+push constant 81
+eq
+if-goto TRUE_BRANCH_4
+goto END_IF_4
+label TRUE_BRANCH_4
+push constant 1
+neg
+pop local 1
+label END_IF_4
+push local 0
+push constant 90
+eq
+if-goto TRUE_BRANCH_5
+goto END_IF_5
+label TRUE_BRANCH_5
+push this 0
+call Square.decSize 1
+pop temp 0
+label END_IF_5
+push local 0
+push constant 88
+eq
+if-goto TRUE_BRANCH_6
+goto END_IF_6
+label TRUE_BRANCH_6
+push this 0
+call Square.incSize 1
+pop temp 0
+label END_IF_6
+push local 0
+push constant 131
+eq
+if-goto TRUE_BRANCH_7
+goto END_IF_7
+label TRUE_BRANCH_7
+push constant 1
+pop this 1
+label END_IF_7
+push local 0
+push constant 133
+eq
+if-goto TRUE_BRANCH_8
+goto END_IF_8
+label TRUE_BRANCH_8
+push constant 2
+pop this 1
+label END_IF_8
+push local 0
+push constant 130
+eq
+if-goto TRUE_BRANCH_9
+goto END_IF_9
+label TRUE_BRANCH_9
+push constant 3
+pop this 1
+label END_IF_9
+push local 0
+push constant 132
+eq
+if-goto TRUE_BRANCH_10
+goto END_IF_10
+label TRUE_BRANCH_10
+push constant 4
+pop this 1
+label END_IF_10
+label LOOP_2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto END_LOOP_2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call SquareGame.moveSquare 1
+pop temp 0
+goto LOOP_2
+label END_LOOP_2
+goto LOOP_0
+label END_LOOP_0
+push constant 0
+return
