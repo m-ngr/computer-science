@@ -1,5 +1,5 @@
 {
-  "name": "vmtranslator",
+  "name": "vm-translator",
   "version": "1.0.0",
   "description": "Converts VM-Code to hack assembly code",
   "main": "vmtranslator.js",
@@ -8,7 +8,7 @@
   },
   "keywords": [
     "Nand2Tetris",
-    "VMTranslator",
+    "VM-Translator",
     "Hack"
   ],
   "author": "mahmoud-elnagar <mahmoud.elnagar1698@gmail.com>",
