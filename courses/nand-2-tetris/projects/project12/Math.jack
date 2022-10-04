@@ -1,0 +1,133 @@
+// Mahmoud Elnagar - 03/10/2022
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+    static Array twos;
+    /** Initializes the library. */
+    function void init() {
+        var int val, bit;
+        let val = 1;
+        let bit = 0;
+        let twos = Array.new(16);
+        
+        while (bit < 16) {
+            let twos[bit] = val;
+            let bit = bit + 1;
+            let val = val + val;
+        }
+
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+        if (x < 0) { let x = -x; }
+        return x;
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+        var int sum, shiftedX, i;
+        let sum = 0;
+        let shiftedX = x;
+        let i = 0;
+        while(i < 16){
+            if(Math.bit(y,i)){
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;
+            let i = i + 1;
+        }
+
+        return sum;
+    }
+    /** Returns the ith bit of binary representation of x */
+    function boolean bit (int x, int i) {
+        return ~((twos[i] & x) = 0);
+    }
+
+    function int pow2(int n){
+        return twos[n];
+    }
+
+    function int mod(int x, int y){
+        return (x - ((x / y) * y));
+    }
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+        var int r;
+        var boolean negate;
+        let negate = false;
+
+        if(x < 0){ let negate = ~ negate;}
+        if(y < 0){ let negate = ~ negate;}
+
+        let x = Math.abs(x);
+        let y = Math.abs(y);
+
+        let r = Math.div_pos(x, y);
+        
+        if(negate){let r = -r;}
+
+        return r;
+    }
+
+    function int div_pos(int x, int y){
+        var int q;
+
+        if((y > x) | (y < 0)) { return 0; }
+
+        let q = Math.div_pos(x, y+y);
+        let q = q + q;
+
+        if(~((x - (q*y)) < y)){ let q = q + 1 ; }
+
+        return q;
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+        var int y, i, t,tt;
+        let y = 0;
+        let i = 7;
+        
+        while (~(i < 0)){
+            let t = y + twos[i];
+            let tt = t*t;
+            if((tt > 0) & (~(tt > x))) { let y = t; }
+
+            let i = i - 1;
+        }
+
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+        if (a > b) {
+            return a;
+        }else{
+            return b;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+        if (a < b) {
+            return a;
+        }else{
+            return b;
+        }
+    }
+}
