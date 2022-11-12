@@ -120,6 +120,79 @@ public:
 
 #pragma endregion
 
+#pragma region The Functional Interface
+
+	template<typename F>
+	HashMap filter(F& predicate) {
+		HashMap result(capacity(), max_load_factor());
+		for (auto& entry : *this) {
+			if (predicate(entry)) result.insert(entry);
+		}
+		return result;
+	}
+
+	template <typename K2,typename V2,typename H2 = std::hash<K2>>
+	HashMap<K2,V2,H2> map(typename HashMap<K2, V2, H2>::Entry (*transform) (const Entry&)) {
+		HashMap<K2, V2, H2> result(capacity(), max_load_factor());
+		for (auto& entry : *this) {
+			result.insert(transform(entry));
+		}
+		return result;
+	}
+
+	template <typename R>
+	R reduce(const R& init, R(*accumulate) (const R&, const Entry&)) {
+		R result = init;
+		for (auto& entry : *this) {
+			result = accumulate(result, entry);
+		}
+		return result;
+	}
+	
+	template <typename R>
+	R reduce_values(const R& init, R(*accumulate) (const R&, const value_type&)) {
+		R result = init;
+		for (auto& entry : *this) {
+			result = accumulate(result, entry.value());
+		}
+		return result;
+	}
+
+	template <typename F>
+	bool exists(F& predicate) {
+		for (auto& entry : *this) {
+			if (predicate(entry)) return true;
+		}
+		return false;
+	}
+
+	template <typename F>
+	Iterator find(F& predicate) {
+		for (auto it = begin(); it != end(); ++it) {
+			if (predicate(*it)) return it;
+		}
+		return end();
+	}
+
+	template<typename F>
+	HashMap& filter_self(F& predicate) {
+
+		for (auto it = begin(); it != end();) {
+			auto next = it; ++next;
+			if (!predicate(*it)) erase(it);
+			it = next;
+		}
+
+		return *this;
+	}
+
+	HashMap& remove_all(const value_type& value) {
+		auto pred = [=](auto e) {return e.value() != value; };
+		return filter_self(pred);
+	}
+
+#pragma endregion
+
 private:
 
 #pragma region Private Type Declarations

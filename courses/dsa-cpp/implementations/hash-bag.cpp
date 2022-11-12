@@ -125,6 +125,70 @@ public:
 
 #pragma endregion
 
+#pragma region The Functional Interface
+
+	template<typename F>
+	HashBag filter(F& predicate) {
+		HashBag result(capacity(), max_load_factor());
+		for (auto& item : *this) {
+			if (predicate(item)) result.insert(item);
+		}
+		return result;
+	}
+
+	template <typename T2, typename H2 = std::hash<T2>>
+	HashBag<T2, H2> map(T2(*transform) (const value_type&)) {
+		HashBag<T2, H2> result(capacity(), max_load_factor());
+		for (auto& item : *this) {
+			result.insert(transform(item));
+		}
+		return result;
+	}
+
+	template <typename R>
+	R reduce(const R& init, R(*accumulate) (const R&, const value_type&)) {
+		R result = init;
+		for (auto& item : *this) {
+			result = accumulate(result, item);
+		}
+		return result;
+	}
+
+	template <typename F>
+	bool exists(F& predicate) {
+		for (auto& item : *this) {
+			if (predicate(item)) return true;
+		}
+		return false;
+	}
+
+	template <typename F>
+	Iterator find(F& predicate) {
+		for (auto it = begin(); it != end(); ++it) {
+			if (predicate(*it)) return it;
+		}
+		return end();
+	}
+
+	template<typename F>
+	HashBag& filter_self(F& predicate) {
+
+		for (auto it = begin(); it != end();) {
+			auto next = it; ++next;
+			if (!predicate(*it)) erase(it);
+			it = next;
+		}
+
+		return *this;
+	}
+
+	HashBag& remove_all(const value_type& value) {
+		auto pred = [=](auto e) {return e != value; };
+		return filter_self(pred);
+	}
+
+#pragma endregion
+
 private:
 
 #pragma region Private Type Declarations
