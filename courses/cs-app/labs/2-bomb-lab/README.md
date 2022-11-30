@@ -360,32 +360,32 @@ From the table, we can see that the key is **any** of the following pairs:
 
 ```asm
 phase_5:
-  0x0000000000401062 <+0>:	push   %rbx                             # save rbx
-  0x0000000000401063 <+1>:	sub    $0x20,%rsp                       # allocate 32 bytes to stack
-  0x0000000000401067 <+5>:	mov    %rdi,%rbx                        # rbx = rdi
-  0x000000000040106a <+8>:	mov    %fs:0x28,%rax                    # rax = fs[0x28] (canary)
-  0x0000000000401073 <+17>:	mov    %rax,0x18(%rsp)                  # rsp[24] = rax
-  0x0000000000401078 <+22>:	xor    %eax,%eax                        # eax = 0
-  0x000000000040107a <+24>:	call   0x40131b <string_length>         # string_length(rdi)
-  0x000000000040107f <+29>:	cmp    $0x6,%eax                        # if(eax == 6)
-  0x0000000000401082 <+32>:	je     0x4010d2 <phase_5+112>           # then: goto <+112>
-  0x0000000000401084 <+34>:	call   0x40143a <explode_bomb>          # else: explode_bomb()
-  0x0000000000401089 <+39>:	jmp    0x4010d2 <phase_5+112>           # goto: <+112>
-  0x000000000040108b <+41>:	movzbl (%rbx,%rax,1),%ecx               # ecx = M[rbx + rax]
-  0x000000000040108f <+45>:	mov    %cl,(%rsp)                       # rsp[0] = cl
-  0x0000000000401092 <+48>:	mov    (%rsp),%rdx                      # rdx = rsp[0]
-  0x0000000000401096 <+52>:	and    $0xf,%edx                        # edx = edx & 0xf
-  0x0000000000401099 <+55>:	movzbl 0x4024b0(%rdx),%edx              # edx = M[rdx + 0x4024b0]
-  0x00000000004010a0 <+62>:	mov    %dl,0x10(%rsp,%rax,1)            # M[16 + rsp + rax] = dl
-  0x00000000004010a4 <+66>:	add    $0x1,%rax                        # rax += 1
-  0x00000000004010a8 <+70>:	cmp    $0x6,%rax                        # if(rax != 6)
-  0x00000000004010ac <+74>:	jne    0x40108b <phase_5+41>            # then: goto<+41>
-  0x00000000004010ae <+76>:	movb   $0x0,0x16(%rsp)                  # else: rsp[22] = 0 (char)
-  0x00000000004010b3 <+81>:	mov    $0x40245e,%esi                   # esi = 0x40245e
-  0x00000000004010b8 <+86>:	lea    0x10(%rsp),%rdi                  # rdi = rsp[16]
-  0x00000000004010bd <+91>:	call   0x401338 <strings_not_equal>     # strings_not_equal(rdi,rsi)
-  0x00000000004010c2 <+96>:	test   %eax,%eax                        # if(eax == 0)
-  0x00000000004010c4 <+98>:	je     0x4010d9 <phase_5+119>           # then: goto <+119>
+  0x0000000000401062 <+0>:  push   %rbx                             # save rbx
+  0x0000000000401063 <+1>:  sub    $0x20,%rsp                       # allocate 32 bytes to stack
+  0x0000000000401067 <+5>:  mov    %rdi,%rbx                        # rbx = rdi
+  0x000000000040106a <+8>:  mov    %fs:0x28,%rax                    # rax = fs[0x28] (canary)
+  0x0000000000401073 <+17>: mov    %rax,0x18(%rsp)                  # rsp[24] = rax
+  0x0000000000401078 <+22>: xor    %eax,%eax                        # eax = 0
+  0x000000000040107a <+24>: call   0x40131b <string_length>         # string_length(rdi)
+  0x000000000040107f <+29>: cmp    $0x6,%eax                        # if(eax == 6)
+  0x0000000000401082 <+32>: je     0x4010d2 <phase_5+112>           # then: goto <+112>
+  0x0000000000401084 <+34>: call   0x40143a <explode_bomb>          # else: explode_bomb()
+  0x0000000000401089 <+39>: jmp    0x4010d2 <phase_5+112>           # goto: <+112>
+  0x000000000040108b <+41>: movzbl (%rbx,%rax,1),%ecx               # ecx = M[rbx + rax]
+  0x000000000040108f <+45>: mov    %cl,(%rsp)                       # rsp[0] = cl
+  0x0000000000401092 <+48>: mov    (%rsp),%rdx                      # rdx = rsp[0]
+  0x0000000000401096 <+52>: and    $0xf,%edx                        # edx = edx & 0xf
+  0x0000000000401099 <+55>: movzbl 0x4024b0(%rdx),%edx              # edx = M[rdx + 0x4024b0]
+  0x00000000004010a0 <+62>: mov    %dl,0x10(%rsp,%rax,1)            # M[16 + rsp + rax] = dl
+  0x00000000004010a4 <+66>: add    $0x1,%rax                        # rax += 1
+  0x00000000004010a8 <+70>: cmp    $0x6,%rax                        # if(rax != 6)
+  0x00000000004010ac <+74>: jne    0x40108b <phase_5+41>            # then: goto<+41>
+  0x00000000004010ae <+76>: movb   $0x0,0x16(%rsp)                  # else: rsp[22] = 0 (char)
+  0x00000000004010b3 <+81>: mov    $0x40245e,%esi                   # esi = 0x40245e
+  0x00000000004010b8 <+86>: lea    0x10(%rsp),%rdi                  # rdi = rsp[16]
+  0x00000000004010bd <+91>: call   0x401338 <strings_not_equal>     # strings_not_equal(rdi,rsi)
+  0x00000000004010c2 <+96>: test   %eax,%eax                        # if(eax == 0)
+  0x00000000004010c4 <+98>: je     0x4010d9 <phase_5+119>           # then: goto <+119>
   0x00000000004010c6 <+100>: call  0x40143a <explode_bomb>          # else: explode_bomb()
   0x00000000004010cb <+105>: nopl  0x0(%rax,%rax,1)                 # do nothing
   0x00000000004010d0 <+110>: jmp   0x4010d9 <phase_5+119>           # goto <+119>
@@ -461,38 +461,38 @@ From this table, we can see that the key is **any** of:
 
 ```asm
 phase_6:
-  0x00000000004010f4 <+0>:	push   %r14                         # save r14
-  0x00000000004010f6 <+2>:	push   %r13                         # save r13
-  0x00000000004010f8 <+4>:	push   %r12                         # save r12
-  0x00000000004010fa <+6>:	push   %rbp                         # save rbp
-  0x00000000004010fb <+7>:	push   %rbx                         # save rbx
-  0x00000000004010fc <+8>:	sub    $0x50,%rsp                   # allocate 80 bytes to stack
-  0x0000000000401100 <+12>:	mov    %rsp,%r13                    # r13 = rsp
-  0x0000000000401103 <+15>:	mov    %rsp,%rsi                    # rsi = rsp
-  0x0000000000401106 <+18>:	call   0x40145c <read_six_numbers>  # read_six_numbers(rdi, rsi)
-  0x000000000040110b <+23>:	mov    %rsp,%r14                    # r14 = rsp
-  0x000000000040110e <+26>:	mov    $0x0,%r12d                   # r12 = 0
-  0x0000000000401114 <+32>:	mov    %r13,%rbp                    # rbp = r13
-  0x0000000000401117 <+35>:	mov    0x0(%r13),%eax               # eax = M[r13]
-  0x000000000040111b <+39>:	sub    $0x1,%eax                    # eax = eax - 1
-  0x000000000040111e <+42>:	cmp    $0x5,%eax                    # if(eax <= 5)
-  0x0000000000401121 <+45>:	jbe    0x401128 <phase_6+52>        # then: goto <+52>
-  0x0000000000401123 <+47>:	call   0x40143a <explode_bomb>      # else: explode_bomb()
-  0x0000000000401128 <+52>:	add    $0x1,%r12d                   # r12 += 1
-  0x000000000040112c <+56>:	cmp    $0x6,%r12d                   # if(r12 == 6)
-  0x0000000000401130 <+60>:	je     0x401153 <phase_6+95>        # then: goto <+95>
-  0x0000000000401132 <+62>:	mov    %r12d,%ebx                   # else: ebx = r12
-  0x0000000000401135 <+65>:	movslq %ebx,%rax                    # rax = ebx
-  0x0000000000401138 <+68>:	mov    (%rsp,%rax,4),%eax           # eax = rsp[rax*4]
-  0x000000000040113b <+71>:	cmp    %eax,0x0(%rbp)               # if(M[rbp] != eax)
-  0x000000000040113e <+74>:	jne    0x401145 <phase_6+81>        # then: goto <+81>
-  0x0000000000401140 <+76>:	call   0x40143a <explode_bomb>      # else: explode_bomb()
-  0x0000000000401145 <+81>:	add    $0x1,%ebx                    # ebx += 1
-  0x0000000000401148 <+84>:	cmp    $0x5,%ebx                    # if(ebx <= 5)
-  0x000000000040114b <+87>:	jle    0x401135 <phase_6+65>        # then: goto <+65>
-  0x000000000040114d <+89>:	add    $0x4,%r13                    # else: r13 += 4
-  0x0000000000401151 <+93>:	jmp    0x401114 <phase_6+32>        # goto <+32>
-  0x0000000000401153 <+95>:	lea    0x18(%rsp),%rsi              # rsi = rsp + 24
+  0x00000000004010f4 <+0>:  push   %r14                         # save r14
+  0x00000000004010f6 <+2>:  push   %r13                         # save r13
+  0x00000000004010f8 <+4>:  push   %r12                         # save r12
+  0x00000000004010fa <+6>:  push   %rbp                         # save rbp
+  0x00000000004010fb <+7>:  push   %rbx                         # save rbx
+  0x00000000004010fc <+8>:  sub    $0x50,%rsp                   # allocate 80 bytes to stack
+  0x0000000000401100 <+12>: mov    %rsp,%r13                    # r13 = rsp
+  0x0000000000401103 <+15>: mov    %rsp,%rsi                    # rsi = rsp
+  0x0000000000401106 <+18>: call   0x40145c <read_six_numbers>  # read_six_numbers(rdi, rsi)
+  0x000000000040110b <+23>: mov    %rsp,%r14                    # r14 = rsp
+  0x000000000040110e <+26>: mov    $0x0,%r12d                   # r12 = 0
+  0x0000000000401114 <+32>: mov    %r13,%rbp                    # rbp = r13
+  0x0000000000401117 <+35>: mov    0x0(%r13),%eax               # eax = M[r13]
+  0x000000000040111b <+39>: sub    $0x1,%eax                    # eax = eax - 1
+  0x000000000040111e <+42>: cmp    $0x5,%eax                    # if(eax <= 5)
+  0x0000000000401121 <+45>: jbe    0x401128 <phase_6+52>        # then: goto <+52>
+  0x0000000000401123 <+47>: call   0x40143a <explode_bomb>      # else: explode_bomb()
+  0x0000000000401128 <+52>: add    $0x1,%r12d                   # r12 += 1
+  0x000000000040112c <+56>: cmp    $0x6,%r12d                   # if(r12 == 6)
+  0x0000000000401130 <+60>: je     0x401153 <phase_6+95>        # then: goto <+95>
+  0x0000000000401132 <+62>: mov    %r12d,%ebx                   # else: ebx = r12
+  0x0000000000401135 <+65>: movslq %ebx,%rax                    # rax = ebx
+  0x0000000000401138 <+68>: mov    (%rsp,%rax,4),%eax           # eax = rsp[rax*4]
+  0x000000000040113b <+71>: cmp    %eax,0x0(%rbp)               # if(M[rbp] != eax)
+  0x000000000040113e <+74>: jne    0x401145 <phase_6+81>        # then: goto <+81>
+  0x0000000000401140 <+76>: call   0x40143a <explode_bomb>      # else: explode_bomb()
+  0x0000000000401145 <+81>: add    $0x1,%ebx                    # ebx += 1
+  0x0000000000401148 <+84>: cmp    $0x5,%ebx                    # if(ebx <= 5)
+  0x000000000040114b <+87>: jle    0x401135 <phase_6+65>        # then: goto <+65>
+  0x000000000040114d <+89>: add    $0x4,%r13                    # else: r13 += 4
+  0x0000000000401151 <+93>: jmp    0x401114 <phase_6+32>        # goto <+32>
+  0x0000000000401153 <+95>: lea    0x18(%rsp),%rsi              # rsi = rsp + 24
   0x0000000000401158 <+100>: mov    %r14,%rax                   # rax = r14
   0x000000000040115b <+103>: mov    $0x7,%ecx                   # ecx = 7
   0x0000000000401160 <+108>: mov    %ecx,%edx                   # edx = ecx
