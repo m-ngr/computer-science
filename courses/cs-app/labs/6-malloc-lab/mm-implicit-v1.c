@@ -218,8 +218,7 @@ static void* resize_block(void* pp, size_t size) {
 
   if (bsize >= (size + MIN_BLOCK_SIZE)){
     SET_INFO(pp, size, 1);
-    pp = NEXT_BLOCK(pp);
-    SET_INFO(pp, bsize-size, 0);
+    SET_INFO(NEXT_BLOCK(pp), bsize-size, 0);
   }
 
   heap_check(__LINE__);
