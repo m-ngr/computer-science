@@ -246,12 +246,12 @@ static void* resize_block(void* pp, size_t size) {
 
   if (size > bsize) return expand_block(pp, size);
 
-  if (bsize > (size + MIN_BLOCK_SIZE)){
+  if (bsize >= (size + MIN_BLOCK_SIZE)){
     SET_HEADER_SIZE(pp, size);
-    pp = NEXT_BLOCK(pp);
-    SET_INFO(pp, bsize-size, 1, 0);
-    set_prev_bit(NEXT_BLOCK(pp), 0);
-    pp = coalesce(pp);
+    void* free_part = NEXT_BLOCK(pp);
+    SET_INFO(free_part, bsize-size, 1, 0);
+    set_prev_bit(NEXT_BLOCK(free_part), 0);
+    coalesce(free_part);
   }
 
   heap_check(__LINE__);
