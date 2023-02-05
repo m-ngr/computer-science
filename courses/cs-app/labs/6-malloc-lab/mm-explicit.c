@@ -459,6 +459,7 @@ static void mm_check(int line){
 
 /** 
  * Free-List Consistency Checker, checks for:
+ * - blocks are free.
  * - free-blocks are in heap range.
  * - the predecessor consistency.
  * - the free-list block count matches the free_count (free-blocks in the heap)
@@ -469,6 +470,11 @@ static void check_free_list(int line, int free_count){
   void* pred_pp = NULL;
   int count = 0;
   for(void* pp = free_list; pp != NULL; pp = GET_SUCC(pp)){
+    // check if block is free
+    if (!IS_FREE(pp)){
+      printf("Error at %d: Free-List contains an allocated-block %p.\n",
+        line, pp);
+    }
     // check if free-block in heap range
     if (pp <= start_ptr || pp >= end_ptr){
       printf("Error at %d: Free-List contains a free-block %p out of the heap range.\n",
