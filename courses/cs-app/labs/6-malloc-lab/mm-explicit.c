@@ -1,6 +1,8 @@
 /*
  * mm-explicit.c - explicit free list based malloc package.
  * 
+ * Perf index = 43 (util) + 40 (thru) = 83/100
+ * 
  * Block Format: Minimum size is 16 bytes.
  *  - Free-Block Format: [Header - Pred - Succ - (Empty) - Footer]
  *  - Allocated-Block Format: [Header - Payload - Footer]
@@ -14,7 +16,7 @@
  * 
  * Placement Policy: using first-fit algorithm.
  * Split Policy: always split if remainder is greater than 16 bytes
- * Coalescing Policy: bi-direction coalescing after each call to mm_free
+ * Coalescing Policy: bi-direction coalescing after each unallocation
  * 
  * realloc: split if new size is less than the block size by 16 bytes
  *          allocate-copy-free if new size is greater than block size
@@ -46,7 +48,7 @@ team_t team = {
 /* ========================== Function Prototype =============================== */
 
 inline static void* resize_block(void*, size_t);
-inline static void* expand_block(void*, size_t);
+inline static void* reallocate_block(void*, size_t);
 inline static void* extend_heap(size_t);
 inline static void* first_fit(size_t);
 inline static void* best_fit(size_t);
@@ -115,13 +117,15 @@ inline static void unlink_block(void*);
 /* Get the header-word pointer from the payload pointer pp */
 #define HEADER(pp) (MOVE_WORD(pp, -1))
 /* Get the footer-word pointer from the payload pointer pp */
-#define FOOTER(pp) (MOVE_BYTE(pp, (BLOCK_SIZE(pp) - DSIZE)))
+#define FOOTER(pp) (MOVE_BYTE(pp, PAYLOAD_SIZE(pp)))
 /* Get next block payload pointer from pp (current payload pointer) */
 #define NEXT_BLOCK(pp) (MOVE_BYTE(pp, BLOCK_SIZE(pp)))
 /* Get previous block payload pointer from pp (current payload pointer) */
 #define PREV_BLOCK(pp) (MOVE_BYTE(pp, - READ_SIZE(MOVE_WORD(pp, -2))))
 /* Read the block size at the payload pp */
 #define BLOCK_SIZE(pp) (READ_SIZE(HEADER(pp)))
+/* Read the payload size at pp */
+#define PAYLOAD_SIZE(pp) (BLOCK_SIZE(pp) - DSIZE)
 /* Check if the block at the payload pp is free */
 #define IS_FREE(pp) (!(READ_ALLOC(HEADER(pp))))
 
@@ -221,7 +225,9 @@ void* mm_realloc(void* ptr, size_t size) {
     mm_free(ptr);
     return NULL;
   }else{
-    return resize_block(ptr, size);
+    ptr = resize_block(ptr, size);
+    heap_check(__LINE__);
+    return ptr;
   }
 }
 
@@ -232,20 +238,20 @@ void* mm_realloc(void* ptr, size_t size) {
  * Return address of the resized block, NULL on error.
  */
 static void* resize_block(void* pp, size_t size) {
+  size_t asize = MAX(MIN_BLOCK_SIZE, ALIGN(size + DSIZE));
   size_t bsize = BLOCK_SIZE(pp);
-  size = ALIGN(size + DSIZE);                 /* Add header and footer words */
+  size_t csize = bsize - asize;
 
-  if (size > bsize) return expand_block(pp, size);
+  if (asize > bsize) return reallocate_block(pp, size);
 
-  if (bsize >= (size + MIN_BLOCK_SIZE)){
-    SET_INFO(pp, size, 1);
+  if (csize >= MIN_BLOCK_SIZE){
+    SET_INFO(pp, asize, 1);
     void* free_part = NEXT_BLOCK(pp);
-    SET_INFO(free_part, bsize-size, 0);
+    SET_INFO(free_part, csize, 0);
     link_block(free_part);
     coalesce(free_part);
   }
 
-  heap_check(__LINE__);
   return pp;
 }
 
@@ -253,10 +259,10 @@ static void* resize_block(void* pp, size_t size) {
  * Allocate block of the given size, copy content, free old block
  * Return address of the new block, NULL on error.
  */
-static void* expand_block(void* ptr, size_t size) {
+static void* reallocate_block(void* ptr, size_t size) {
   void *newptr = mm_malloc(size);
   if (newptr == NULL) return NULL;
-  size_t copy_size = MIN(BLOCK_SIZE(ptr), size);
+  size_t copy_size = MIN(PAYLOAD_SIZE(ptr), size);
   memcpy(newptr, ptr, copy_size);
   mm_free(ptr);
   return newptr;
@@ -441,7 +447,7 @@ static void mm_check(int line){
     }
     // check coalescing.
     if (prev_free && IS_FREE(ptr)){
-      printf("Error at %d: two contiguous free blocks not coalesced\n", line);
+      printf("Note at %d: two contiguous free blocks not coalesced\n", line);
     }
 
     if(IS_FREE(ptr)) ++free_count;
