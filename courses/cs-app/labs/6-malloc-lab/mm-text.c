@@ -1,6 +1,8 @@
 /*
  * mm-text.c - textbook CS:APPe3 implicit free list example malloc package.
  * 
+ * Perf index = 44 (util) + 11 (thru) = 55/100
+ * 
  * Block Format: [Header - Payload - Footer], min size is 16 byte.
  * Header/Footer: 1-word holds size of the block and allocation bit at LSB
  * List Format: implicit free list
