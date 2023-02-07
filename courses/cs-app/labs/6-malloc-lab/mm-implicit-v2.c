@@ -1,6 +1,8 @@
 /*
  * mm-implicit-v2.c - implicit free list based malloc package - version 2.
  * 
+ * Perf index = 46 (util) + 11 (thru) = 57/100
+ * 
  * Block Format: Minimum size is 8 bytes.
  *  - Allocated-Block Format: [Header - Payload]
  *  - Free-Block Format: [Header - (Space) - Footer]
@@ -11,7 +13,7 @@
  *    [Head-Block[1] | Regular-Blocks(F/A) ...| Tail-Block[1]]
  * Placement Policy: using first-fit algorithm.
  * Split Policy: always split if remainder is greater than 8 bytes
- * Coalescing Policy: bi-direction coalescing after each call to mm_free
+ * Coalescing Policy: bi-direction coalescing after each unallocation
  * 
  * realloc: split if new size is less than the block size by 8 bytes
  *          allocate-copy-free if new size is greater than block size
@@ -43,7 +45,7 @@ team_t team = {
 /* ========================== Function Prototype =============================== */
 
 inline static void* resize_block(void*, size_t);
-inline static void* expand_block(void*, size_t);
+inline static void* reallocate_block(void*, size_t);
 inline static void* extend_heap(size_t);
 inline static void* first_fit(size_t);
 inline static void* best_fit(size_t);
@@ -67,7 +69,7 @@ inline static void set_prev_bit(void*, size_t);
 
 #define WSIZE 4                           /* Word size in bytes */
 #define DSIZE 8                           /* Double word size in bytes */
-#define CHUNKSIZE (1<<12)                 /* Minimum heap allocation size */
+#define CHUNKSIZE (1<<8)                  /* Minimum heap allocation size */
 #define MIN_BLOCK_SIZE 8                  /* Minimum block size */
 #define ALIGNMENT 8                       /* Payload Alignment */
 #define WTYPE u_int32_t                   /* Word type */
@@ -128,6 +130,8 @@ inline static void set_prev_bit(void*, size_t);
 #define PREV_BLOCK(pp) (MOVE_BYTE(pp, - READ_SIZE(MOVE_WORD(pp, -2))))
 /* Read the block size at the payload pp */
 #define BLOCK_SIZE(pp) (READ_SIZE(HEADER(pp)))
+/* Read the payload size at pp */
+#define PAYLOAD_SIZE(pp) (BLOCK_SIZE(pp) - WSIZE)
 /* Gets the block allocation status (alloc-bit) */
 #define GET_ALLOC(pp) (READ_ALLOC(HEADER(pp)))
 /* Gets the previous block allocation status (prev-alloc-bit) */
@@ -230,7 +234,9 @@ void* mm_realloc(void* ptr, size_t size) {
     mm_free(ptr);
     return NULL;
   }else{
-    return resize_block(ptr, size);
+    ptr = resize_block(ptr, size);
+    heap_check(__LINE__);
+    return ptr;
   }
 }
 
@@ -241,20 +247,20 @@ void* mm_realloc(void* ptr, size_t size) {
  * Return address of the resized block, NULL on error.
  */
 static void* resize_block(void* pp, size_t size) {
+  size_t asize = MAX(MIN_BLOCK_SIZE, ALIGN(size + WSIZE));
   size_t bsize = BLOCK_SIZE(pp);
-  size = ALIGN(size + WSIZE);                 /* Add header word */
+  size_t csize = bsize - asize;
 
-  if (size > bsize) return expand_block(pp, size);
+  if (asize > bsize) return reallocate_block(pp, size);
 
-  if (bsize >= (size + MIN_BLOCK_SIZE)){
-    SET_HEADER_SIZE(pp, size);
+  if (csize >= MIN_BLOCK_SIZE){
+    SET_HEADER_SIZE(pp, asize);
     void* free_part = NEXT_BLOCK(pp);
-    SET_INFO(free_part, bsize-size, 1, 0);
+    SET_INFO(free_part, csize, 1, 0);
     set_prev_bit(NEXT_BLOCK(free_part), 0);
     coalesce(free_part);
   }
 
-  heap_check(__LINE__);
   return pp;
 }
 
@@ -262,10 +268,10 @@ static void* resize_block(void* pp, size_t size) {
  * Allocate block of the given size, copy content, free old block
  * Return address of the new block, NULL on error.
  */
-static void* expand_block(void* ptr, size_t size) {
+static void* reallocate_block(void* ptr, size_t size) {
   void *newptr = mm_malloc(size);
   if (newptr == NULL) return NULL;
-  size_t copy_size = MIN(BLOCK_SIZE(ptr), size);
+  size_t copy_size = MIN(PAYLOAD_SIZE(ptr), size);
   memcpy(newptr, ptr, copy_size);
   mm_free(ptr);
   return newptr;
