@@ -11,3 +11,4 @@
 | [mm-seglist-v2.c](./mm-seglist-v2.c)   | Segregated list based malloc package v2      | 55/60              | 40/40      | 95%               |
 | [mm-seglist-v3.c](./mm-seglist-v3.c)   | Segregated list based malloc package v3      | 57/60              | 40/40      | 97%               |
 | [mm-seglist-v4.c](./mm-seglist-v4.c)   | Segregated list based malloc package v4      | 58/60              | 40/40      | 98%               |
+- The malloc package isn't 64-bit compliant.
