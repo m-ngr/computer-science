@@ -1,6 +1,7 @@
-/* 
- * csapp.c - Functions for the CS:APP3e book (Modified)
- */
+/** 
+ * mcsapp.c - Modified version of csapp.c
+ * Modified by: Mahmoud Elnagar 
+*/
 
 #include "mcsapp.h"
 
