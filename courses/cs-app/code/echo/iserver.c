@@ -1,4 +1,4 @@
-#include "mcsapp.h"
+#include "./lib/mcsapp.h"
 
 void echo(int sock, const char* host, const char* port){
   rio_t rio;

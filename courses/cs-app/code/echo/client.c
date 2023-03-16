@@ -1,4 +1,4 @@
-#include "mcsapp.h"
+#include "./lib/mcsapp.h"
 
 int echo(int sock){
   rio_t rio;
