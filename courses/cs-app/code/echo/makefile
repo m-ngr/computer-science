@@ -2,6 +2,7 @@ DIR = ./bin
 IPORT = 1111
 PPORT = 1112
 TPORT = 1113
+PTPORT = 1114
 LIBS = ./lib/*.c
 
 build:
@@ -10,6 +11,7 @@ build:
 	gcc -O2 -o ${DIR}/echo-iserver iserver.c ${LIBS}
 	gcc -O2 -o ${DIR}/echo-pserver pserver.c ${LIBS}
 	gcc -O2 -o ${DIR}/echo-tserver tserver.c ${LIBS} -pthread
+	gcc -O2 -o ${DIR}/echo-ptserver ptserver.c ${LIBS} -pthread
 
 clean:
 	rm -r -f ${DIR}
@@ -25,6 +27,9 @@ pclient:
 tclient:
 	${DIR}/echo-client 127.0.0.1 ${TPORT}
 
+ptclient:
+	${DIR}/echo-client 127.0.0.1 ${PTPORT}
+
 #============================ Run Server =================================
 
 iserver:
@@ -35,3 +40,6 @@ pserver:
 
 tserver:
 	${DIR}/echo-tserver ${TPORT}
+
+ptserver:
+	${DIR}/echo-ptserver ${PTPORT} 10
