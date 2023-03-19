@@ -19,35 +19,35 @@ This project is an implementation of an echo client-server system, featuring mul
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/m-ngr/computer-science.git
-```
+    ```bash
+    git clone https://github.com/m-ngr/computer-science.git
+    ```
 
 2. Change to the echo project directory:
 
-```bash
-cd computer-science/courses/cs-app/code/echo
-```
+    ```bash
+    cd computer-science/courses/cs-app/code/echo
+    ```
 
 3. Build the project:
 
-```bash
-make build
-```
+    ```bash
+    make build
+    ```
 
 4. Run the desired server type in the background:
 
-```bash
-make [server-type] &
-```
+    ```bash
+    make [server-type] &
+    ```
 
 Replace `[server-type]` with one of the available server types: `iserver`, `pserver`, `tserver`, `ptserver`, `dtserver`.
 
 5. Run the client:
 
-```bash
-make [client-type]
-```
+    ```bash
+    make [client-type]
+    ```
 
 Replace `[client-type]` with one of the available client types: `iclient`, `pclient`, `tclient`, `ptclient`, `dtclient`.
 
