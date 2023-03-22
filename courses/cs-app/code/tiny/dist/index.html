@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <h1>
+      Test HTML/CSS/JS Files:
+      <a href="./rps.html"> Rock Paper Scissors Game </a>
+    </h1>
+    <hr />
+    <form action="./cgi-bin/adder" method="get">
+      <h1>Dynamic Request using GET method</h1>
+      <div>
+        <label for="n1">n1</label>
+        <input type="number" name="n1" value="5" id="n1" />
+      </div>
+      <div>
+        <label for="n2">n2</label>
+        <input type="number" name="n2" value="8" id="n2" />
+      </div>
+      <br />
+      <button type="submit">Add</button>
+    </form>
+    <hr />
+    <form action="./cgi-bin/adder" method="post">
+      <h1>Dynamic Request using POST method</h1>
+      <div>
+        <label for="n1">n1</label>
+        <input type="number" name="n1" value="12" id="n1" />
+      </div>
+      <div>
+        <label for="n2">n2</label>
+        <input type="number" name="n2" value="10" id="n2" />
+      </div>
+      <br />
+      <button type="submit">Add</button>
+    </form>
+    <hr />
+    <h1>Test Images (JPG/GIF)</h1>
+    <img src="./godzilla.jpg" alt="JPG Image" />
+    <img src="./godzilla.gif" alt="GIF Image" />
+    <hr />
+  </body>
+</html>
