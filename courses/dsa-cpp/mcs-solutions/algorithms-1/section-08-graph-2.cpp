@@ -4,7 +4,10 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <set>
+#include <queue>
+#include <algorithm>
 using namespace std;
 
 #pragma region MCS: Problem Set 1 Solutions
@@ -241,10 +244,47 @@ vector<int> restoreArray(vector<vector<int>>& adjacentPairs) {
 }
 
 //Problem #2: LeetCode 1202 - Smallest String With Swaps
-/* TO BE SOLVED */
+void getCC(vector<vector<int>>& graph, vector<bool>& visited, set<int>& cc, int i){
+  cc.insert(i);
+  visited[i] = true;
+
+  for(auto& ni: graph[i]){
+    if (visited[ni]) continue;
+    getCC(graph, visited, cc, ni);
+  }
+}
+
+vector<set<int>> getCCList(vector<vector<int>>& graph){
+  vector<bool> visited(graph.size(), false);
+  vector<set<int>> ccs;
+  for(int i = 0; i < graph.size(); ++i){
+    if (visited[i]) continue;
+    set<int> newCC;
+    getCC(graph, visited, newCC, i);
+    ccs.push_back(newCC);
+  }
+  return ccs;
+}
+
+void processCC(const set<int>& cc, string& str){
+  string ccStr = "";
+  for(auto& i: cc) ccStr += str[i];
+  sort(ccStr.begin(), ccStr.end());
+  int cci = 0;
+  for(auto& i: cc) str[i] = ccStr[cci++];
+}
+
+string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
+  vector<vector<int>> graph(s.size());
+  for(auto& pair: pairs){
+    graph[pair[0]].push_back(pair[1]);
+    graph[pair[1]].push_back(pair[0]);
+  }
+  for(auto& cc: getCCList(graph)) processCC(cc, s);
+  return s;
+}
 
 //Problem #3: Leetcode 128 - Longest Consecutive Sequence
-
 int longestConsecutive(vector<int>& nums) {
   unordered_map<int, int> length;
   for(auto& n : nums){
@@ -288,12 +328,90 @@ bool isBipartite(vector<vector<int>>& graph) {
 }
 
 //Problem #2: LeetCode 1466 - Reorder Routes to Make All Paths Lead to the City Zero
-/* TO BE SOLVED */
+
+int visitCityDFS(vector<vector<pair<int, bool>>>& graph, int i, int pi){
+  int count = 0;
+
+  for(auto& ni: graph[i]){
+    if (ni.first == pi) continue;
+    if (ni.second) ++count;
+    count += visitCityDFS(graph, ni.first, i);
+  }
+
+  return count;
+}
+
+int minReorder(int n, vector<vector<int>>& connections) {
+  vector<vector<pair<int, bool>>> graph(n);
+  for(auto& edge: connections) {
+    graph[edge[0]].push_back({edge[1], true});
+    graph[edge[1]].push_back({edge[0], false});
+  }
+
+  return visitCityDFS(graph, 0, -1);
+}
 
 //Problem #3: LeetCode 1631. Path With Minimum Effort
-/* TO BE SOLVED */
+
+bool limitedReachDFS(vector<vector<int>>& graph, vector<vector<bool>>& visited, int i, int j, int limit){
+  const int ROWS = graph.size(), COLS = graph[0].size();
+  if (i == (ROWS - 1) && j == (COLS - 1)) return true;
+
+  visited[i][j] = true;
+
+  for(int d = 0; d < 4; ++d){
+    int ni = i + di[d];
+    int nj = j + dj[d];
+    if (ni < 0 || nj < 0 || ni >= ROWS || nj >= COLS || visited[ni][nj]) continue;
+
+    int diff = abs(graph[i][j] - graph[ni][nj]);
+    if (diff > limit) continue;
+    if (limitedReachDFS(graph, visited, ni, nj, limit)) return true;
+  }
+
+  return false;
+}
+
+int minimumEffortPath(vector<vector<int>>& heights) {
+
+  int start = 0, end = 1000000, result = INT32_MAX;
+
+  while(start <= end){
+    int mid = start + (end - start) / 2;
+    vector<vector<bool>> visited (heights.size(), vector<bool>(heights[0].size(), false));
+    if (limitedReachDFS(heights, visited, 0,0, mid)){
+      end = mid - 1;
+      result = mid;
+    }else{
+      start = mid + 1;
+    }
+  }
+
+  return result;
+}
 
 //Problem #4: O(V) Cycle Detection in undirected
-/* TO BE SOLVED */
+
+bool cycleDFS(GRAPH& graph, vector<bool>& visited, int i, int pi){
+  if (visited[i]) return true;
+  visited[i] = true;
+  for(auto& ni: graph[i]){
+    if (ni == pi) continue;
+    if (cycleDFS(graph, visited, ni, i)) return true;
+  }
+
+  return false;
+}
+
+bool has_cycle_undirected(GRAPH& graph){
+  vector<bool> visited(graph.size());
+
+  for(int i = 0; i < graph.size(); ++i){
+    if (visited[i]) continue;
+    if (cycleDFS(graph, visited, i, -1)) return true;
+  }
+
+  return false;
+}
 
 #pragma endregion
