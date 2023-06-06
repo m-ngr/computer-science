@@ -1,4 +1,4 @@
-# CS:APP Proxy Lab
+# Proxy Server
 
  The proxy server acts as an intermediary between clients and servers, forwarding client requests to the appropriate servers and returning the server's response to the clients. This allows the proxy server to provide caching, filtering, and other functionality.
 
