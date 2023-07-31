@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "stack.h"
 
 class StackFull : public std::runtime_error {
 public:
