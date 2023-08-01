@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "stack.hpp"
 #include<vector>
 
 template <typename T> class VectorStack : public Stack<T> {

@@ -1,4 +1,4 @@
-#include "stack.h"
+#include "stack.hpp"
 #include<list>
 
 template <typename T> class ListStack : public Stack<T> {
