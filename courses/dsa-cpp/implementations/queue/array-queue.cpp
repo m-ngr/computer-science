@@ -1,4 +1,4 @@
-#include "Queue.h"
+#include "queue.hpp"
 
 class QueueFull : public std::runtime_error {
 public:
