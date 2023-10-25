@@ -1,0 +1,2 @@
+1|mahmoud|123456|Mahmoud@gmail|Mahmoud Adel|1|1
+5|omar|123456|omar@gmail|Omar Adel|0|1
