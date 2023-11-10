@@ -1,4 +1,4 @@
-#include "Deque.h"
+#include "deque.hpp"
 #include<vector>
 
 template<typename T>class VectorDeque: public Deque<T> {

@@ -1,4 +1,4 @@
-#include "Deque.h"
+#include "deque.hpp"
 
 class DequeFull : public std::runtime_error {
 public:
